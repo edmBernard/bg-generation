@@ -26,7 +26,7 @@ import cv2
 import numpy as np
 from docopt import docopt
 from random import randint
-from path import path
+from path import Path
 
 class Geometry(object):
   def __init__(self, step, margin):
@@ -67,9 +67,9 @@ class Rectangle(Geometry):
     cx = self.offsetx + x * self._stepx
     cy = self.offsety + y * self._stepy
 
-    pts = np.array([[int(cx-self.sx), int(cy+self.sy)], 
-                    [int(cx-self.sx), int(cy-self.sy)], 
-                    [int(cx+self.sx), int(cy-self.sy)], 
+    pts = np.array([[int(cx-self.sx), int(cy+self.sy)],
+                    [int(cx-self.sx), int(cy-self.sy)],
+                    [int(cx+self.sx), int(cy-self.sy)],
                     [int(cx+self.sx), int(cy+self.sy)]], np.int32).reshape((-1, 1, 2))
     return [int(cx), int(cy), pts]
 
@@ -93,10 +93,10 @@ class Losange(Geometry):
       cy = self.offsety + y * self._stepy
     else:
       cy = self.offsety + y * self._stepy + self._stepy/2.
-      
-    pts = np.array([[int(cx-self.sx), int(cy)], 
-                    [int(cx), int(cy-self.sy)], 
-                    [int(cx+self.sx), int(cy)], 
+
+    pts = np.array([[int(cx-self.sx), int(cy)],
+                    [int(cx), int(cy-self.sy)],
+                    [int(cx+self.sx), int(cy)],
                     [int(cx), int(cy+self.sy)]], np.int32).reshape((-1, 1, 2))
     return [int(cx), int(cy), pts]
 
@@ -121,12 +121,12 @@ class Hexagon(Geometry):
       cy = self.offsety + y * self._stepy
     else:
       cy = self.offsety + y * self._stepy + self._stepy/2.
-      
-    pts = np.array([[int(cx-self.sz), int(cy)], 
-                     [int(cx-self.sy), int(cy-self.sx)], 
-                     [int(cx+self.sy), int(cy-self.sx)], 
-                     [int(cx+self.sz), int(cy)], 
-                     [int(cx+self.sy), int(cy+self.sx)], 
+
+    pts = np.array([[int(cx-self.sz), int(cy)],
+                     [int(cx-self.sy), int(cy-self.sx)],
+                     [int(cx+self.sy), int(cy-self.sx)],
+                     [int(cx+self.sz), int(cy)],
+                     [int(cx+self.sy), int(cy+self.sx)],
                      [int(cx-self.sy), int(cy+self.sx)]], np.int32).reshape((-1, 1, 2))
     return [int(cx), int(cy), pts]
 
@@ -152,13 +152,13 @@ class Triangle(Geometry):
     cx = self.offsetx + x * self._stepx
     if (x+y) % 2 == 0:
       cy = self.offsety + y * self._stepy + self.su
-      pts = np.array([[int(cx), int(cy-self.sy)], 
-                      [int(cx-self.sx), int(cy+self.sz)], 
+      pts = np.array([[int(cx), int(cy-self.sy)],
+                      [int(cx-self.sx), int(cy+self.sz)],
                       [int(cx+self.sx), int(cy+self.sz)]], np.int32).reshape((-1, 1, 2))
     else:
       cy = self.offsety + y * self._stepy - self.su
-      pts = np.array([[int(cx-self.sx), int(cy-self.sz)], 
-                      [int(cx), int(cy+self.sy)], 
+      pts = np.array([[int(cx-self.sx), int(cy-self.sz)],
+                      [int(cx), int(cy+self.sy)],
                       [int(cx+self.sx), int(cy-self.sz)]], np.int32).reshape((-1, 1, 2))
     return [int(cx), int(cy), pts]
 
@@ -167,7 +167,7 @@ if __name__ == '__main__':
   arguments = docopt(__doc__, version='0.1')
   print(arguments)
 
-  img = cv2.imread(path(arguments["<filename>"]))
+  img = cv2.imread(Path(arguments["<filename>"]))
 
   # choix du motif
   if arguments["--hex"]:
@@ -183,7 +183,7 @@ if __name__ == '__main__':
 
   stepx, stepy = geometry.step
   dst_size = list(map(int, arguments["--size"].split(",")))
-  
+
   # crop to keep the same proportion after resize
   max_factor = max(dst_size[0]/img.shape[1], dst_size[1]/img.shape[0])
   h = int(dst_size[1]/max_factor)
@@ -212,8 +212,8 @@ if __name__ == '__main__':
   output = cv2.resize(output, (dst_size[0], dst_size[1]), interpolation=cv2.INTER_CUBIC)
 
   if arguments["--output"]:
-    print(arguments["--output"] + path(arguments["<filename>"]).basename())
-    cv2.imwrite(arguments["--output"] + path(arguments["<filename>"]).basename(), output * 255)
+    print(arguments["--output"] + Path(arguments["<filename>"]).basename())
+    cv2.imwrite(arguments["--output"] + Path(arguments["<filename>"]).basename(), output * 255)
   cv2.imshow("Test", output)
   cv2.waitKey(0)
 
