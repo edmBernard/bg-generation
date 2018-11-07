@@ -1,14 +1,14 @@
 """
-mosaique.py.
-python mosaique.py reborn_from_ashes_by_nanomortis-dah4pk0.png --rec -g 9 -m 1 -b 1.1 --holes
-python mosaique.py reborn_from_ashes_by_nanomortis-dah4pk0.png --tri -g 6 -m 0 -b 1.1 --holes
-python mosaique.py reborn_from_ashes_by_nanomortis-dah4pk0.png --hex -g 9 -m 0 -b 1.1 --holes
-python mosaique.py reborn_from_ashes_by_nanomortis-dah4pk0.png --los -g 6 -m 2 -b 1.1 --holes
+mosaic.py.
+python mosaic.py reborn_from_ashes_by_nanomortis-dah4pk0.png --rec -g 9 -m 1 -b 1.1 --holes
+python mosaic.py reborn_from_ashes_by_nanomortis-dah4pk0.png --tri -g 6 -m 0 -b 1.1 --holes
+python mosaic.py reborn_from_ashes_by_nanomortis-dah4pk0.png --hex -g 9 -m 0 -b 1.1 --holes
+python mosaic.py reborn_from_ashes_by_nanomortis-dah4pk0.png --los -g 6 -m 2 -b 1.1 --holes
 
 Usage:
-  mosaique.py <filename> (--hex|--tri|--rec|--los) [options]
-  mosaique.py -h | --help
-  mosaique.py --version
+  mosaic.py <filename> (--hex|--tri|--rec|--los) [options]
+  mosaic.py -h | --help
+  mosaic.py --version
 
 Options:
   -h --help     Show this screen.
