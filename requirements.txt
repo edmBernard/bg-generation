@@ -1,0 +1,4 @@
+path.py
+docopt
+numpy
+opencv-python
